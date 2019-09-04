@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: covr-deployment
+  labels:
+    app: covr
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: covr
+  template:
+    metadata:
+      labels:
+        app: covr
+    spec:
+      containers:
+        - name: covr
+          image: covrco/sre-grpc-exercise
+          ports:
+            - containerPort: 9001
+              name: backend-tcp

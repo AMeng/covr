@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package covr.grpc.sentence;
+
+option go_package = "sentencepb";
+
+// A request to split a sentence into individual words
+message SplitSentenceRequest {
+    // The sentence to split
+    string sentence = 1;
+}
+
+// A unary response for splitting a sentence
+message SplitSentenceUnaryResponse {
+    // The individual words in the sentence
+    repeated string words = 1;
+}
+
+// A stream response for splitting a sentence
+message SplitSentenceStreamResponse {
+    // A single word from the sentence in the request
+    string word = 1;
+}
+
+// Services related to sentences
+service Sentence {
+    // Split the sentence and get a single response with all of the words in it
+    rpc SplitUnary (SplitSentenceRequest) returns (SplitSentenceUnaryResponse) {}
+    // Split the sentence and get a response for each word that was in the sentence
+    rpc SplitStream (SplitSentenceRequest) returns (stream SplitSentenceStreamResponse) {}
+}
