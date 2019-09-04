@@ -14,3 +14,8 @@ kops create cluster \
   --networking calico \
   --yes \
   --zones $AWS_ZONE
+
+until kops validate cluster; do
+  echo "Waiting 10 seconds before trying again..."
+  sleep 10
+done
