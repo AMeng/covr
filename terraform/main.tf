@@ -9,3 +9,7 @@ terraform {
     path = "covr.tfstate"
   }
 }
+
+provider "kubernetes" {
+  config_context_cluster   = "covr.k8s.local"
+}
