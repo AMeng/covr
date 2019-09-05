@@ -11,5 +11,5 @@ terraform {
 }
 
 provider "kubernetes" {
-  config_context_cluster   = "covr.k8s.local"
+  config_context_cluster = "covr.k8s.local"
 }
