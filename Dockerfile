@@ -1,8 +1,9 @@
-FROM alpine:3.8
+FROM alpine:3.10
 
 ARG KOPS_VERSION=1.13.0
 ARG KUBECTL_VERSION=1.13.9
 ARG TERRAFORM_VERSION=0.11.14
+ARG EVANS_VERSION=0.8.2
 
 RUN apk add --no-cache --update  \
     bash \
@@ -10,13 +11,10 @@ RUN apk add --no-cache --update  \
     curl \
     git \
     jq \
-    nodejs \
-    nodejs-npm \
     python \
     py-pip \
     vim \
-    && pip install awscli \
-    && npm install --unsafe-perm -g jfyne/grpcc
+    && pip install awscli
 
 RUN curl -SsL --retry 5 \
     "https://github.com/kubernetes/kops/releases/download/${KOPS_VERSION}/kops-linux-amd64" \
@@ -34,8 +32,12 @@ RUN curl -SsL --retry 5 \
     && unzip /tmp/terraform.zip -d /usr/local/bin \
     && rm /tmp/terraform.zip
 
-RUN apk --purge -v del curl py-pip \
-    && rm /var/cache/apk/*
+RUN curl -SsL --retry 5 \
+    "https://github.com/ktr0731/evans/releases/download/${EVANS_VERSION}/evans_linux_amd64.tar.gz" \
+    > /tmp/evans.tar.gz \
+    && tar xvzf /tmp/evans.tar.gz evans -C /usr/local/bin/ \
+    && chmod +x /usr/local/bin/evans \
+    && rm /tmp/evans.tar.gz
 
 WORKDIR /covr
 
