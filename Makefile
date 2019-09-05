@@ -1,10 +1,9 @@
-.PHONY: test
 SHELL := bash
 
-up:
+demo_up:
 	@ ./docker.sh ./demo_up.sh
 
-down:
+demo_down:
 	@ ./docker.sh ./demo_down.sh
 
 attach:

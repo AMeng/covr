@@ -8,6 +8,6 @@ cd ..
 
 kops delete cluster --yes
 
-cd terraform/bootsrap
+cd terraform/bootstrap
 terraform destroy -auto-approve
 cd ../..
